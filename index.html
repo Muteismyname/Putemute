@@ -6,7 +6,6 @@
     <title>La Putemute</title>
     <style>
         body {
-            /* Fuente limpia para todo el cuerpo */
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -18,7 +17,6 @@
             overflow: hidden;
         }
 
-        /* Tarjeta con resplandor rojo */
         .card {
             background: #1a1a1a;
             padding: 3rem;
@@ -31,24 +29,35 @@
             position: relative;
         }
 
-        /* SOLO el título en cursiva/caligráfica */
         h1 {
             color: #ff3e3e;
             font-size: 3.5rem;
-            margin: 0 0 1.5rem 0;
+            margin: 0 0 1rem 0;
             font-family: 'Brush Script MT', 'Apple Chancery', cursive;
             font-weight: normal;
         }
 
-        /* Frases en letra normal */
+        /* Estilo para el número # */
+        .numero {
+            display: block;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
         h2 {
             font-size: 1.4rem;
             font-weight: 400;
             line-height: 1.5;
-            min-height: 100px;
+            min-height: 120px;
             margin-bottom: 2rem;
             color: #f0f0f0;
-            font-style: normal; /* Asegura que no sea cursiva */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease;
         }
 
         button {
@@ -63,13 +72,9 @@
             transition: 0.3s;
             box-shadow: 0 4px 15px rgba(255, 75, 43, 0.4);
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(255, 75, 43, 0.6);
-        }
+        button:active { transform: scale(0.95); }
 
         .info-wrapper {
             position: fixed;
@@ -106,8 +111,6 @@
             visibility: hidden;
             transition: all 0.4s ease;
             white-space: nowrap;
-            color: #fff;
-            font-style: normal;
         }
 
         .creator-tag.visible {
@@ -120,7 +123,8 @@
 
     <div class="card">
         <h1>La Putemute</h1>
-        <h2 id="mensaje">¿Listo para la dosis de realidad?</h2>
+        <span id="num-label" class="numero">VERDAD #---</span>
+        <h2 id="mensaje">Generando dosis de realidad...</h2>
         <button onclick="cambiarMensaje()">Soltar otra verdad</button>
     </div>
 
@@ -132,31 +136,182 @@
     <script>
         const verdades = [
             "Sabes que estás MADURANDO cuando lo que antes TE IMPORTABA UNA MIERDA, ahora te importa tres.",
-            "Me gustaría ser pobre un día... porque serlo todos los días ya cansa.",
-            "Mi billetera es como una cebolla: abrirla me hace llorar.",
-            "No soy vago, estoy en modo de ahorro de energía.",
-            "Estado civil: Cansado.",
-            "Si la vida te da limones... asegúrate de que sean para el tequila.",
-            "La vida es corta. Sonríe mientras todavía tengas dientes.",
-            "No es que sea antisocial, es que soy selectivamente amigable con la gente.",
-            "A veces solo necesito un consejo, un abrazo y 5 millones de dólares."
+            "El dinero no da la felicidad, pero compra pizza, y eso ya ayuda.",
+            "No soy pobre, estoy en modo ahorro extremo.",
+            "Mi banco y yo tenemos una relación tóxica.",
+            "El dinero no compra el amor, pero evita discusiones.",
+            "Quería ser millonario, pero desperté.",
+            "Trabajar para vivir… vivir para pagar cuentas.",
+            "El dinero no da la felicidad, pero el Uber sí.",
+            "No necesito terapia, necesito que me paguen mejor.",
+            "El salario emocional no paga la renta.",
+            "El dinero no es todo, pero sin él nada funciona.",
+            "Soy adulto funcional hasta que veo el estado de cuenta.",
+            "No soy materialista, soy realista.",
+            "El dinero no da la felicidad, pero evita ataques de pánico.",
+            "Quería estabilidad emocional, me dieron deudas.",
+            "No quiero ser rico, quiero no revisar precios.",
+            "El dinero no compra la felicidad, pero compra café.",
+            "Trabajar duro para algún día descansar… tal vez.",
+            "Mi meta es llegar a fin de mes sin drama.",
+            "El dinero no da la felicidad, pero paga el streaming.",
+            "No es que ame el dinero, odio no tenerlo.",
+            "El banco cree más en mí que yo.",
+            "No quiero lujos, quiero pagar sin mirar el saldo.",
+            "El dinero no compra la felicidad, pero compra tacos.",
+            "Ser adulto es pensar en dinero todo el tiempo.",
+            "La vida es bella… hasta que llegan las facturas.",
+            "El dinero no da la felicidad, pero evita llorar en público.",
+            "Trabajo para darle una vida mejor a mi banco.",
+            "No soy ambicioso, soy sobreviviente.",
+            "El dinero no compra la felicidad, pero paga el aire.",
+            "Mi cuenta bancaria está en modo avión.",
+            "No quiero un sugar daddy, quiero un salario digno.",
+            "El dinero no es todo, pero casi.",
+            "Mi hobby es calcular si llego a fin de mes.",
+            "El dinero no da la felicidad, pero da calma.",
+            "No quiero drama, quiero estabilidad financiera.",
+            "Trabajar 8 horas para vivir 2.",
+            "El dinero no compra el amor, pero paga citas.",
+            "No estoy cansado, estoy financieramente agotado.",
+            "La felicidad es temporal, las deudas no.",
+            "El dinero no da la felicidad, pero paga el psicólogo.",
+            "Mi sueño es dormir sin preocuparme.",
+            "No quiero ser millonario, quiero pagar sin miedo.",
+            "El dinero no compra la felicidad, pero compra vacaciones.",
+            "Adulto es decir “después veo” al carrito online.",
+            "El banco siempre gana.",
+            "El dinero no da la felicidad, pero quita estrés.",
+            "Mi plan financiero es sobrevivir.",
+            "No quiero riqueza, quiero estabilidad.",
+            "El dinero no compra la felicidad, pero paga la luz.",
+            "Trabajar duro para pagar cosas que no disfruto.",
+            "El dinero no es malo, la falta sí.",
+            "Mi cuenta bancaria necesita terapia.",
+            "No quiero lujo, quiero tranquilidad.",
+            "El dinero no da la felicidad, pero paga el internet.",
+            "La pobreza no es estética.",
+            "No estoy broke, estoy en pausa económica.",
+            "El dinero no compra la felicidad, pero compra descanso.",
+            "Trabajo para no morir de hambre.",
+            "No quiero drama, quiero ingresos.",
+            "El dinero no da la felicidad, pero evita lágrimas.",
+            "Mi saldo y yo no hablamos.",
+            "Ser adulto es pagar por todo.",
+            "El dinero no compra la felicidad, pero compra tiempo.",
+            "No quiero abundancia, quiero llegar.",
+            "El banco me conoce demasiado bien.",
+            "El dinero no da la felicidad, pero compra comida.",
+            "Trabajo para pagar impuestos y llorar.",
+            "No quiero éxito, quiero estabilidad.",
+            "El dinero no compra la felicidad, pero paga la calma.",
+            "Mi billetera vive en crisis.",
+            "No quiero lujos, quiero paz.",
+            "El dinero no da la felicidad, pero evita el caos.",
+            "El banco siempre responde… cobrando.",
+            "No soy pobre, soy creativo.",
+            "El dinero no compra la felicidad, pero compra silencio.",
+            "Mi sueño es no mirar precios.",
+            "Trabajar duro para sobrevivir.",
+            "El dinero no da la felicidad, pero reduce ansiedad.",
+            "Mi estado financiero: “vemos”.",
+            "No quiero riqueza extrema, quiero orden.",
+            "El dinero no compra la felicidad, pero compra opciones.",
+            "Mi plan A falló, seguimos con fe.",
+            "No quiero lujo, quiero estabilidad emocional pagada.",
+            "El dinero no da la felicidad, pero evita gritos.",
+            "Mi banco y yo no somos amigos.",
+            "No quiero más consejos, quiero dinero.",
+            "El dinero no compra la felicidad, pero compra calma mental.",
+            "Trabajo para vivir, vivo para pagar.",
+            "No quiero abundancia falsa, quiero real.",
+            "El dinero no da la felicidad, pero paga emergencias.",
+            "Mi cuenta bancaria necesita un abrazo.",
+            "No quiero milagros, quiero quincena.",
+            "El dinero no compra la felicidad, pero compra seguridad.",
+            "Ser adulto es preocuparse por dinero.",
+            "No quiero lujo, quiero margen.",
+            "El dinero no da la felicidad, pero quita miedo.",
+            "Mi cartera siempre está cansada.",
+            "No quiero fama, quiero estabilidad.",
+            "El dinero no compra la felicidad, pero compra respiro.",
+            "Trabajar para no preocuparme.",
+            "No quiero riqueza, quiero control.",
+            "El dinero no da la felicidad, pero compra paz.",
+            "Mi banco me observa.",
+            "No quiero sobrevivir, quiero vivir.",
+            "El dinero no compra la felicidad, pero compra libertad.",
+            "Mi estado de cuenta es humilde.",
+            "No quiero más motivación, quiero ingresos.",
+            "El dinero no da la felicidad, pero ayuda bastante.",
+            "Ser adulto es pagar por existir.",
+            "No quiero lujo, quiero tranquilidad constante.",
+            "El dinero no compra la felicidad, pero paga soluciones.",
+            "Mi billetera vive en modo ahorro.",
+            "No quiero drama financiero.",
+            "El dinero no da la felicidad, pero evita urgencias.",
+            "Mi banco siempre me recuerda quién manda.",
+            "No quiero riqueza absurda, quiero estabilidad.",
+            "El dinero no compra la felicidad, pero compra descanso.",
+            "Trabajo para pagar tranquilidad.",
+            "No quiero abundancia visual, quiero funcional.",
+            "El dinero no da la felicidad, pero quita presión.",
+            "Mi plan financiero es no rendirme.",
+            "No quiero lujo, quiero vivir cómodo.",
+            "El dinero no compra la felicidad, pero compra calma.",
+            "Ser adulto es sobrevivir elegantemente.",
+            "No quiero milagros, quiero estabilidad.",
+            "El dinero no da la felicidad, pero evita crisis.",
+            "Mi saldo siempre está tímido.",
+            "No quiero exceso, quiero suficiente.",
+            "El dinero no compra la felicidad, pero compra opciones.",
+            "Trabajo duro para no preocuparme.",
+            "No quiero riqueza extrema, quiero paz.",
+            "El dinero no da la felicidad, pero compra tiempo libre.",
+            "Mi banco me conoce mejor que yo.",
+            "No quiero drama, quiero solvencia.",
+            "El dinero no compra la felicidad, pero compra tranquilidad.",
+            "Ser adulto es pensar en dinero.",
+            "No quiero lujo, quiero equilibrio.",
+            "El dinero no da la felicidad, pero quita estrés.",
+            "Mi billetera siempre está en modo zen.",
+            "No quiero abundancia falsa.",
+            "El dinero no compra la felicidad, pero compra calma mental.",
+            "Trabajo para no preocuparme mañana.",
+            "No quiero riqueza, quiero estabilidad real.",
+            "El dinero no da la felicidad, pero evita el caos.",
+            "Mi cuenta bancaria es minimalista.",
+            "No quiero lujo, quiero control.",
+            "El dinero no compra la felicidad, pero compra paz interior.",
+            "Ser adulto es pagar y callar.",
+            "No quiero drama, quiero estabilidad financiera.",
+            "El dinero no da la felicidad… pero sí mucha tranquilidad."
         ];
 
         function cambiarMensaje() {
             const h2 = document.getElementById('mensaje');
-            const random = Math.floor(Math.random() * verdades.length);
-            h2.innerText = verdades[random];
+            const numLabel = document.getElementById('num-label');
+            
+            h2.style.opacity = "0";
+            
+            setTimeout(() => {
+                // Genera un índice aleatorio real
+                const index = Math.floor(Math.random() * verdades.length);
+                // Muestra la frase y su número (index + 1 para que empiece en #1)
+                h2.innerText = verdades[index];
+                numLabel.innerText = "VERDAD #" + (index + 1);
+                h2.style.opacity = "1";
+            }, 300);
         }
 
         function mostrarAutor() {
             const autor = document.getElementById('autor');
             autor.classList.add('visible');
-            
-            setTimeout(() => {
-                autor.classList.remove('visible');
-            }, 3000);
+            setTimeout(() => autor.classList.remove('visible'), 3000);
         }
-    </script>
 
+        window.onload = cambiarMensaje;
+    </script>
 </body>
 </html>
+        
