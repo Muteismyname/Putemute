@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Putemute</title>
+    <style>
+        body {
+            /* Fuente limpia para todo el cuerpo */
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #0d0d0d;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Tarjeta con resplandor rojo */
+        .card {
+            background: #1a1a1a;
+            padding: 3rem;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 500px;
+            width: 85%;
+            border: 2px solid #ff3e3e;
+            box-shadow: 0 0 30px rgba(255, 62, 62, 0.4);
+            position: relative;
+        }
+
+        /* SOLO el título en cursiva/caligráfica */
+        h1 {
+            color: #ff3e3e;
+            font-size: 3.5rem;
+            margin: 0 0 1.5rem 0;
+            font-family: 'Brush Script MT', 'Apple Chancery', cursive;
+            font-weight: normal;
+        }
+
+        /* Frases en letra normal */
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 400;
+            line-height: 1.5;
+            min-height: 100px;
+            margin-bottom: 2rem;
+            color: #f0f0f0;
+            font-style: normal; /* Asegura que no sea cursiva */
+        }
+
+        button {
+            background: linear-gradient(to right, #ff4b2b, #ff416c);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 75, 43, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255, 75, 43, 0.6);
+        }
+
+        .info-wrapper {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .ball {
+            width: 55px;
+            height: 55px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.8rem;
+            color: #ff3e3e;
+            order: 2;
+        }
+
+        .creator-tag {
+            background: rgba(30, 30, 30, 0.95);
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 1px solid #444;
+            font-size: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            white-space: nowrap;
+            color: #fff;
+            font-style: normal;
+        }
+
+        .creator-tag.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>La Putemute</h1>
+        <h2 id="mensaje">¿Listo para la dosis de realidad?</h2>
+        <button onclick="cambiarMensaje()">Soltar otra verdad</button>
+    </div>
+
+    <div class="info-wrapper">
+        <div id="autor" class="creator-tag">Creado por: Muteismyname</div>
+        <div class="ball" onclick="mostrarAutor()">?</div>
+    </div>
+
+    <script>
+        const verdades = [
+            "Sabes que estás MADURANDO cuando lo que antes TE IMPORTABA UNA MIERDA, ahora te importa tres.",
+            "Me gustaría ser pobre un día... porque serlo todos los días ya cansa.",
+            "Mi billetera es como una cebolla: abrirla me hace llorar.",
+            "No soy vago, estoy en modo de ahorro de energía.",
+            "Estado civil: Cansado.",
+            "Si la vida te da limones... asegúrate de que sean para el tequila.",
+            "La vida es corta. Sonríe mientras todavía tengas dientes.",
+            "No es que sea antisocial, es que soy selectivamente amigable con la gente.",
+            "A veces solo necesito un consejo, un abrazo y 5 millones de dólares."
+        ];
+
+        function cambiarMensaje() {
+            const h2 = document.getElementById('mensaje');
+            const random = Math.floor(Math.random() * verdades.length);
+            h2.innerText = verdades[random];
+        }
+
+        function mostrarAutor() {
+            const autor = document.getElementById('autor');
+            autor.classList.add('visible');
+            
+            setTimeout(() => {
+                autor.classList.remove('visible');
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>
